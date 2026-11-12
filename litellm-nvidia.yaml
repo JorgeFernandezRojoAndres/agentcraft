@@ -1,0 +1,35 @@
+# Traductor local: AgentCraft (habla "API de Claude") -> LiteLLM -> NVIDIA NIM
+# Arrancar con:  litellm --config litellm-nvidia.yaml --port 4000
+#
+# Los nombres "nvidia-lead" y "nvidia-worker" son los que usa AgentCraft.
+# Para cambiar de modelo, cambia solo la línea "model:" (los IDs están en build.nvidia.com,
+# siempre con el prefijo nvidia_nim/). Usa modelos que soporten "tool calling".
+
+model_list:
+  - model_name: nvidia-lead          # Marlow (planifica y revisa)
+    litellm_params:
+      model: nvidia_nim/deepseek-ai/deepseek-v4.1-flash
+      api_base: https://integrate.api.nvidia.com/v1
+      api_key: os.environ/NVIDIA_API_KEY
+
+  - model_name: nvidia-worker        # Juniper, Kit, Wren... (escriben el código)
+    litellm_params:
+      model: nvidia_nim/deepseek-ai/deepseek-v4.1-flash
+      api_base: https://integrate.api.nvidia.com/v1
+      api_key: os.environ/NVIDIA_API_KEY
+
+  - model_name: nvidia-fast          # tareas internas cortas de Claude Code (títulos, resúmenes)
+    litellm_params:
+      model: nvidia_nim/deepseek-ai/deepseek-v4.1-flash
+      api_base: https://integrate.api.nvidia.com/v1
+      api_key: os.environ/NVIDIA_API_KEY
+
+litellm_settings:
+  # Claude Code manda parámetros que NVIDIA no entiende (effort, thinking...): se descartan
+  drop_params: true
+  additional_drop_params: ["output_config"]
+  num_retries: 3
+  request_timeout: 600
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
