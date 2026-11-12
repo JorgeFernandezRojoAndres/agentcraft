@@ -8,19 +8,19 @@
 model_list:
   - model_name: nvidia-lead          # Marlow (planifica y revisa)
     litellm_params:
-      model: nvidia_nim/deepseek-ai/deepseek-v4.1-flash
+      model: nvidia_nim/nvidia/nemotron-3.5-bolt-e4b
       api_base: https://integrate.api.nvidia.com/v1
       api_key: os.environ/NVIDIA_API_KEY
 
   - model_name: nvidia-worker        # Juniper, Kit, Wren... (escriben el código)
     litellm_params:
-      model: nvidia_nim/deepseek-ai/deepseek-v4.1-flash
+      model: nvidia_nim/nvidia/nemotron-3.5-bolt-e4b
       api_base: https://integrate.api.nvidia.com/v1
       api_key: os.environ/NVIDIA_API_KEY
 
   - model_name: nvidia-fast          # tareas internas cortas de Claude Code (títulos, resúmenes)
     litellm_params:
-      model: nvidia_nim/deepseek-ai/deepseek-v4.1-flash
+      model: nvidia_nim/nvidia/nemotron-3.5-bolt-e4b
       api_base: https://integrate.api.nvidia.com/v1
       api_key: os.environ/NVIDIA_API_KEY
 
